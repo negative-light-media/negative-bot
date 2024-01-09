@@ -1,6 +1,5 @@
 from freebible import read_web
 from freebible import bibles
-from litedb import DiskDatabase, MemoryDatabase
 import random
 import time
 import datetime
