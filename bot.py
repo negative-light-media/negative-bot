@@ -224,6 +224,6 @@ async def unlockbot(ctx):
         await ctx.send("restrictions have been lifted")
         await ctx.send("don't hesatate to use this tool!")
 
-bot.run('OTk2MjA3ODkwMzA0MDkwMjIy.GYMPQe.aUylGA1y1mvQm3ZxPuGxYbCcUwZHz71-2M73cA')
+bot.run('Token here!')
 
     
