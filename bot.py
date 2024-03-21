@@ -149,7 +149,7 @@ async def github(ctx):
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def donate(ctx):
     if locked[0] == "false":
-        await ctx.send("https://www.buymeacoffee.com/widget/page/NegativeLight?description=Support%20me%20on%20Buy%20me%20a%20coffee!&color=%235d2f9d")
+        await ctx.send("https://ko-fi.com/negative_light")
 @bot.command(pass_context=True)
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def report(ctx, *args):
