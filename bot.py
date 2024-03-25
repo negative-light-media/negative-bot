@@ -78,6 +78,7 @@ async def meme(ctx):
         if postit == True:
             await ctx.send(memetosend)
 
+
 @bot.command()
 @commands.cooldown(1, 30, commands.BucketType.user)
 async def addmeme(ctx, arg):
@@ -95,12 +96,18 @@ async def addmeme(ctx, arg):
                     good = False
                     break
             except:
-                memelist.append(arg)
-                await ctx.send(str('nice meme you got there, ',ctx.message.author))
-                await ctx.send('adding to my cringe collection!')
-                break
-
-
+                postit = True
+                with open('blockedmemes.txt') as f:
+                    if arg in f.read():
+                        print("attempted displaying a blocked meme")
+                        postit = False
+                if postit == True:
+                    memelist.append(arg)
+                    await ctx.send(str('nice meme you got there, ',ctx.message.author))
+                    await ctx.send('adding to my cringe collection!')
+                    break
+                    
+                    
 @bot.command()
 @commands.is_owner()
 async def printall(ctx):
@@ -274,6 +281,22 @@ async def unlockbot(ctx):
         locked[0] = "false"
         await ctx.send("restrictions have been lifted")
         await ctx.send("don't hesatate to use this tool!")
+
+@bot.command()
+@commands.is_owner()
+async def blockmeme(ctx, arg):
+    with open("memes.txt","rw")as f:
+        for line in f:
+            if arg in line:
+                line = line.replace(arg, "")
+                print("deleted meme:", arg)
+                await ctx.send(str("deleted meme:",arg))
+    f.close()
+    blockedmemes = open("blockedmemes.txt","rw")
+    blockedmemes.write(str(arg))
+    blockedmemes.close()
+    
+
 token = open("token.env",'r')
 
 bot.run(token.read())
