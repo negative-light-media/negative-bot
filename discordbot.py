@@ -6,20 +6,16 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 global locked
-
-
 locked = False
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def deletememeID(ctx, arg):
     memefile = open("meme.csv","r+")
-    
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def  deletememe(ctx, arg):
     with open("meme.csv", "r") as fp:
         lines = fp.readlines()
-
     with open("meme.csv", "w") as fp:
         for line in lines:
             if line.strip("\n").split("?")[0] != str(arg.split("?")[0]):
@@ -27,8 +23,6 @@ async def  deletememe(ctx, arg):
                 fp.write(line)
             else:
                 await ctx.send("deleted meme")
-                
-    
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def lock(ctx):
@@ -51,7 +45,6 @@ async def  memelist(ctx):
         await ctx.send(" meme ID: "+str(count))
 """
 ^  ADMIN COMMANDS  ^
-
 V END USER COMMANDS V
 """
 @bot.command(pass_context=True)
@@ -93,6 +86,5 @@ async def invitelink(ctx):
 V  RUNTIME  V
 """
 token = open("token.env",'r')
-
 bot.run(token.readline())
 token.close()
