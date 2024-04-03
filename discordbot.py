@@ -2,15 +2,20 @@ import discord
 import random
 import os
 from discord.ext import commands
+from dotenv import load_dotenv
+
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
+
 global locked
 locked = False
+
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def deletememeID(ctx, arg):
     memefile = open("meme.csv","r+")
+
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def  deletememe(ctx, arg):
@@ -23,6 +28,7 @@ async def  deletememe(ctx, arg):
                 fp.write(line)
             else:
                 await ctx.send("deleted meme")
+
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def lock(ctx):
@@ -33,6 +39,7 @@ async def lock(ctx):
     else:
         locked = False
         await ctx.send("bot has been unlocked")
+
 @bot.command()
 @commands.has_permissions(manage_messages=True)
 async def  memelist(ctx):
@@ -59,23 +66,27 @@ async def meme(ctx):
             memelines.append(line)
         memeindex = random.randrange(cnt)
         await ctx.send(memelines[memeindex])
+
 @bot.command(pass_context=True)
 async def addmeme(ctx, arg):
      memefile = open("meme.csv","a")
      global locked
      if locked == False:
          memefile.write(arg+"\n")
+
 @bot.command()
 async def rules(ctx):
    global locked
    if locked == False:
         await ctx.send("**rules for bot usage goes here**")#for negative to fill out
         await ctx.send("by using this bot you except these rules above")
+
 @bot.command()
 async def github(ctx):
     global locked
     if locked == False:
         await ctx.send("https://github.com/Negative-light/")
+
 @bot.command()
 async def invitelink(ctx):
     global locked
@@ -85,6 +96,14 @@ async def invitelink(ctx):
 """
 V  RUNTIME  V
 """
-token = open("token.env",'r')
-bot.run(token.readline())
-token.close()
+if __name__ == '__main__':
+    print("Loading Enviroment Variables")
+    load_dotenv()
+    MODE = os.getenv("MODE")
+    DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+    if MODE == "test":
+        print("You are in test mode. The bot will not run but this ensures other features work properly")
+        print(f"DISCORD TOEKN: {DISCORD_TOKEN}")
+    elif MODE == "prod":
+        print("Running Discord Bot")
+        bot.run(DISCORD_TOKEN)
